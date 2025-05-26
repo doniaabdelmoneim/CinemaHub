@@ -1,0 +1,154 @@
+﻿@model Actor
+@{
+    ViewData["Title"] = "Actor Details";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card actor-profile-card shadow-lg">
+                <div class="row g-0">
+                    <!-- Actor Image Column -->
+                    <div class="col-md-4 d-flex align-items-center justify-content-center p-4">
+                        <div class="position-relative">
+                            <img src="@(string.IsNullOrEmpty(Model.PhotoUrl) ? "/images/actor-placeholder.jpg" : Model.PhotoUrl)"
+                                 class="img-fluid rounded-circle border border-4 border-primary shadow actor-profile-img"
+                                 alt="@Model.FullName">
+                            <div class="actor-rating-badge">
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-star-fill"></i> Featured
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actor Details Column -->
+                    <div class="col-md-8">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <h1 class="card-title text-gradient mb-0">
+                                    @Model.FullName
+                                </h1>
+                                <div class="btn-group">
+                                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </a>
+                                    <a asp-action="Index" class="btn btn-sm btn-outline-secondary">
+                                        <i class="bi bi-arrow-left"></i> Back
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="actor-meta mb-4">
+                                <span class="text-muted me-3">
+                                    <i class="bi bi-calendar me-1"></i> Born @Model.BirthDate?.ToString("MMMM d, yyyy")
+                                </span>
+                                <span class="text-muted">
+                                    <i class="bi bi-film me-1"></i> @Model.ActorMovies?.Count movies
+                                </span>
+                            </div>
+
+                            <div class="actor-bio mb-4">
+                                <h5 class="text-primary mb-3">
+                                    <i class="bi bi-file-text me-2"></i>Biography
+                                </h5>
+                                <p class="card-text">@Model.Bio</p>
+                            </div>
+
+                            <!-- Movies Section -->
+                            <div class="actor-movies">
+                                <h5 class="text-primary mb-3">
+                                    <i class="bi bi-collection-play me-2"></i>Featured Movies
+                                </h5>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @if (Model.ActorMovies?.Any () == true)
+                                    {
+                                        foreach (var movie in Model.ActorMovies)
+                                        {
+                                            <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.MovieId"
+                                               class="badge bg-dark text-white p-2 movie-badge">
+                                                @movie.Movie?.Title
+                                            </a>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">No movies found</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .actor-profile-card {
+            border-radius: 15px;
+            overflow: hidden;
+            border: none;
+            background-color: #1e1e1e;
+        }
+
+        .text-gradient {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .actor-profile-img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+            .actor-profile-img:hover {
+                transform: scale(1.05);
+            }
+
+        .actor-rating-badge {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .actor-meta {
+            padding: 0.5rem 1rem;
+            background-color: rgba(13, 110, 253, 0.1);
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        .actor-bio {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .movie-badge {
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+
+            .movie-badge:hover {
+                background-color: #0d6efd !important;
+                transform: translateY(-2px);
+                text-decoration: none;
+            }
+
+        .btn-outline-primary {
+            transition: all 0.3s ease;
+        }
+
+            .btn-outline-primary:hover {
+                background-color: #0d6efd;
+                transform: translateY(-2px);
+            }
+    </style>
+}

@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Not Found";
+    Layout = "_Layout2";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-warning">
+                <div class="card-header bg-dark text-warning">
+                    <h1 class="card-title mb-0">
+                        <i class="bi bi-exclamation-octagon-fill me-2"></i>404 - Resource Not Found
+                    </h1>
+                </div>
+                <div class="card-body text-center py-5">
+                    <div class="error-icon mb-4">
+                        <i class="bi bi-search-heart" style="font-size: 5rem; color: #ffc107;"></i>
+                    </div>
+                    <h2 class="text-gradient mb-4">We couldn't find what you're looking for</h2>
+
+                    <div class="error-details bg-dark p-4 rounded mb-4">
+                        <p class="lead">The requested resource was not found. This could be because:</p>
+
+                        <ul class="list-unstyled text-start mb-0" style="max-width: 500px; margin: 0 auto;">
+                            <li class="mb-2"><i class="bi bi-dot me-2 text-warning"></i>The item has been deleted</li>
+                            <li class="mb-2"><i class="bi bi-dot me-2 text-warning"></i>You entered an incorrect URL</li>
+                            <li class="mb-2"><i class="bi bi-dot me-2 text-warning"></i>The resource has been moved</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex flex-column flex-md-row justify-content-center gap-3 mt-5">
+                        <a href="javascript:history.back()" class="btn btn-outline-warning btn-lg">
+                            <i class="bi bi-arrow-left me-2"></i>Go Back
+                        </a>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary btn-lg">
+                            <i class="bi bi-house-door me-2"></i>Return Home
+                        </a>
+                        <a asp-controller="Home" asp-action="Contact" class="btn btn-outline-info btn-lg">
+                            <i class="bi bi-question-circle me-2"></i>Get Help
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .error-icon {
+            animation: pulse 2s infinite;
+        }
+     .text-gradient {
+            background: linear-gradient(45deg, #ffc107, #fd7e14);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .error-details {
+            border-left: 3px solid #ffc107;
+        }
+
+        .card.border-warning {
+            border-width: 2px;
+            background-color: #1e1e1e;
+        }
+
+        .btn-outline-warning {
+            transition: all 0.3s ease;
+        }
+
+            .btn-outline-warning:hover {
+                background-color: #ffc107;
+                color: #212529;
+                transform: translateY(-2px);
+            }
+    </style>
+}

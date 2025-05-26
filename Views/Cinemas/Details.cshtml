@@ -1,0 +1,128 @@
+﻿@model CinemaHub.Models.Cinema
+
+@{
+    ViewData["Title"] = "Cinema Details";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5 text-gradient">
+            <i class="bi bi-building me-2"></i>@Model.Name
+        </h1>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary rounded-pill shadow-sm me-2">
+                <i class="bi bi-pencil me-1"></i>Edit
+            </a>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill shadow-sm">
+                <i class="bi bi-arrow-left me-1"></i>Back to List
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-info-circle me-2"></i>Overview
+                    </h3>
+                </div>
+                <div class="card-body text-center">
+                    @if (!string.IsNullOrEmpty (Model.CinemaImageUrl))
+                    {
+                        <img src="@Model.CinemaImageUrl"
+                             class="img-fluid rounded-circle border border-4 border-white shadow mb-3"
+                             style="width: 200px; height: 200px; object-fit: cover;"
+                             alt="@Model.Name"
+                             onerror="this.onerror=null;this.src='/images/default-cinema.png';">
+                    }
+                    else
+                    {
+                        <img src="/images/default-cinema.png"
+                             class="img-fluid rounded-circle border border-4 border-white shadow mb-3"
+                             style="width: 200px; height: 200px; object-fit: cover;"
+                             alt="Default cinema image">
+                    }
+                    <h4>@Model.Name</h4>
+                    <p class="text-muted">@Model.Description</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-geo-alt me-2"></i>Location Details
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <h5 class="text-primary"><i class="bi bi-geo-fill me-2"></i>Address</h5>
+                                <p>@Model.Location</p>
+                            </div>
+
+                            <div class="mb-3">
+                                <h5 class="text-primary"><i class="bi bi-clock me-2"></i>Opening Hours</h5>
+                                <p>@Model.OpeningHours</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <h5 class="text-primary"><i class="bi bi-telephone me-2"></i>Contact</h5>
+                                <p>@Model.ContactNumber</p>
+                                <p>@Model.ContactEmail</p>
+                            </div>
+
+                            <div class="mb-3">
+                                <h5 class="text-primary"><i class="bi bi-door-open me-2"></i>Halls</h5>
+                                <p>@Model.TotalHalls screening halls</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <div id="map" style="height: 300px; background-color: #f8f9fa; border-radius: 5px;" class="p-3">
+                            <div class="d-flex justify-content-center align-items-center h-100">
+                                <div class="text-center">
+                                    <i class="bi bi-map text-muted" style="font-size: 3rem;"></i>
+                                    <p class="mt-2 text-muted">Map view of @Model.Name</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.movies != null && Model.movies.Any ())
+            {
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-dark text-white">
+                        <h3 class="card-title mb-0">
+                            <i class="bi bi-film me-2"></i>Currently Showing (@Model.movies.Count)
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+                            @foreach (var movie in Model.movies)
+                            {
+                                <div class="col">
+                                    <div class="card h-100 border-0 shadow-sm">
+                                        <img src="@movie.PosterUrl" class="card-img-top" alt="@movie.Title" style="height: 150px; object-fit: cover;">
+                                        <div class="card-body">
+                                            <h6 class="card-title">@movie.Title</h6>
+                                            <p class="card-text small text-muted">@movie.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

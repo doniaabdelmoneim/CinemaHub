@@ -1,0 +1,101 @@
+﻿@model IEnumerable<ApplicationUser>
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="display-4 text-primary">Our users</h1>
+        @if (User.Identity.IsAuthenticated && User.IsInRole ("Admin"))
+        {
+            <a asp-controller="Actors" asp-action="Create" class="btn btn-primary btn-lg">
+                <i class="bi bi-plus-circle"></i> Add New Actor
+            </a>
+        }
+    </div>
+
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h3 class="card-title mb-0">User Portfolio</h3>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="py-3 px-4">Full Name</th>
+                            <th class="py-3 px-4">user Name</th>
+                            <th class="py-3 px-4">Email</th>
+                    
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                         
+                                <td class="py-3 px-4 align-middle font-weight-bold">@item.FullName</td>
+                                <td class="py-3 px-4 align-middle">
+                                    <div class="text-truncate" style="max-width: 300px;" title="@item.UserName">
+                                        @item.UserName
+                                    </div>
+                                </td>
+                                <td class="py-3 px-4 align-middle">
+                                    @item.Email
+                                </td>
+                               
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer bg-light">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="text-muted">
+                    Showing @Model.Count() user
+                </div>
+                <div> 
+                    <a href="#" class="btn btn-sm btn-outline-secondary">
+                        <i class="bi bi-arrow-up"></i> Back to Top
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section styles {
+    <style>
+        .avatar {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+        }
+
+            .avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(13, 110, 253, 0.05);
+            transform: translateY(-1px);
+            transition: all 0.2s ease;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .text-truncate {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+    </style>
+}

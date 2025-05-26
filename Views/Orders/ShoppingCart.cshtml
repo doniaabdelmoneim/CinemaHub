@@ -1,0 +1,135 @@
+﻿@using CinemaHub.Data.ViewModels;
+@model ShoppingCartVM
+@{
+    ViewData["Title"] = "Shopping cart summary";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-gradient">
+                Your Shopping Cart Summary
+            </h2>
+            <p class="text-muted">Review your selected movies before checkout</p>
+        </div>
+
+        <div class="card shadow-lg">
+            <div class="card-header bg-gradient">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0 text-white"><i class="bi bi-cart3 me-2"></i>Cart Items</h4>
+                    <span class="badge bg-light text-dark fs-6">@Model.ShoppingCart.ShoppingCartItems.Count items</span>
+                </div>
+            </div>
+
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th class="ps-4">Movie</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th class="text-end pe-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.ShoppingCart.ShoppingCartItems)
+                            {
+                                <tr class="align-middle">
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <img src="@item.Movie.PosterUrl" alt="Movie Image" class="rounded me-3" style="width: 60px; height: 80px; object-fit: cover;" />
+                                            <span class="fw-medium">@item.Movie.Title</span>
+                                        </div>
+                                    </td>
+                                    <td>@item.Movie.price.ToString("C")</td>
+                                    <td>
+                                        <span class="badge bg-primary rounded-pill fs-6">@item.Amount</span>
+                                    </td>
+                                    <td class="fw-bold">@(( item.Movie.price * item.Amount ).ToString("C"))</td>
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <a class="btn btn-outline-danger" asp-controller="orders" asp-action="RemoveItemFromShoppingCart"
+                                               asp-route-id="@item.Movie.Id" title="Remove one">
+                                                <i class="bi bi-dash-lg"></i>
+                                            </a>
+                                            <a class="btn btn-outline-success" asp-controller="orders" asp-action="AddItemToShoppingCart"
+                                               asp-route-id="@item.Movie.Id" title="Add one more">
+                                                <i class="bi bi-plus-lg"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-footer bg-dark">
+                <div class="d-flex justify-content-between align-items-center">
+                    <a class="btn btn-outline-light" asp-controller="Movies" asp-action="Index">
+                        <i class="bi bi-arrow-left me-2"></i>Continue Shopping
+                    </a>
+                    <div class="text-end">
+                        <h5 class="mb-0">
+                            <span class="text-muted me-3">Total:</span>
+                            <span class="text-success fw-bold">@Model.ShoppingCartTotal.ToString("C")</span>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end mt-4">
+            <div id="paypal-btn" class="me-3"></div>
+            @* <a class="btn btn-primary px-4" asp-action="CompleteOrder">
+                <i class="bi bi-credit-card me-2"></i>Checkout
+            </a> *@
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    <script>
+        let _total=@Html.Raw(Model.ShoppingCartTotal)
+        paypal.Button.render({
+            //configure enviroment
+            env: 'sandbox', //sandbox or production
+            client:{
+                sandbox:'AZmQFO0R3ENFWiT3p0Cj7POsvkV0b2YdTM7gEZCEFJ2DPc2SvEl1NzGfw9IGBnWDutbflbC5-BZGbJLp'
+            },
+            //custoize button
+            locale: 'en_US',
+            style: {
+                size: 'medium',
+                color: 'gold',
+                shape: 'pill',
+                label: 'checkout',
+                height: 45
+            },
+            commit:true,
+            //set up payment
+            payment: function(data, actions) {
+                return actions.payment.create({
+                    transactions: [{
+                        amount: {
+                            total: _total,
+                            currency: 'USD'
+                        },
+                        description: 'Order from CinemaHub'
+                    }]
+                });
+            },
+            //execute payment
+            onAuthorize: function(data, actions) {
+                return actions.payment.execute().then(function() {
+                    //redirect to order completed page
+                    window.location.href = '@Url.Action("CompleteOrder", "Orders", new { })';
+                });
+            }
+        },'#paypal-btn');
+    </script>
+}

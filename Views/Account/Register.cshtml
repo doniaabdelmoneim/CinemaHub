@@ -1,0 +1,162 @@
+﻿@using CinemaHub.Data.ViewModels;
+@model RegisterVM
+@{
+    ViewData["Title"] = "Create Your CinemaHub Account";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="auth-card card shadow-lg border-0 rounded-4 overflow-hidden">
+                <div class="card-header bg-gradient-primary text-white p-4">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="bi bi-ticket-perforated fs-1"></i>
+                        <div>
+                            <h1 class="h3 mb-0">Create Your Account</h1>
+                            <p class="mb-0 opacity-75">Join CinemaHub to access exclusive features</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-4 p-lg-5">
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger d-flex align-items-center gap-3" role="alert">
+                            <i class="bi bi-x-circle-fill fs-4"></i>
+                            <div>
+                                <span class="fw-medium">Registration Error:</span> @TempData["Error"]
+                            </div>
+                        </div>
+                    }
+
+                    <form asp-action="Register" class="needs-validation" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-4"></div>
+
+                        <!-- Full Name -->
+                        <div class="form-floating mb-4">
+                            <input asp-for="FullName" class="form-control"
+                                   placeholder="Full Name" required />
+                            <label asp-for="FullName" class="form-label">
+                                <i class="bi bi-person-badge me-2"></i>Full Name
+                            </label>
+                            <span asp-validation-for="FullName" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-floating mb-4">
+                            <input asp-for="EmailAddress" type="email" class="form-control"
+                                   placeholder="name@example.com" required />
+                            <label asp-for="EmailAddress" class="form-label">
+                                <i class="bi bi-envelope me-2"></i>Email Address
+                            </label>
+                            <span asp-validation-for="EmailAddress" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="form-floating mb-4 position-relative">
+                            <input asp-for="Password" type="password" class="form-control"
+                                   placeholder="Password" required />
+                            <label asp-for="Password" class="form-label">
+                                <i class="bi bi-lock me-2"></i>Password
+                            </label>
+                            <button type="button" class="btn btn-link position-absolute end-0 top-0 pt-3 pe-3 toggle-password">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            <span asp-validation-for="Password" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="form-floating mb-4">
+                            <input asp-for="ConfirmPassword" type="password" class="form-control"
+                                   placeholder="Confirm Password" required />
+                            <label asp-for="ConfirmPassword" class="form-label">
+                                <i class="bi bi-shield-lock me-2"></i>Confirm Password
+                            </label>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-grid gap-3 mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-pill py-3 fw-semibold">
+                                <i class="bi bi-person-add me-2"></i>Create Account
+                            </button>
+                            <div class="text-center mt-3">
+                                <span class="text-muted">Already have an account? </span>
+                                <a asp-action="Login" class="text-primary fw-semibold">
+                                    Sign In Now
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Password visibility toggle
+        document.querySelectorAll('.toggle-password').forEach(button => {
+            button.addEventListener('click', function() {
+                const input = this.closest('.form-floating').querySelector('input');
+                const icon = this.querySelector('i');
+
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.replace('bi-eye', 'bi-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.replace('bi-eye-slash', 'bi-eye');
+                }
+            });
+        });
+
+        // Form validation
+        (() => {
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+}
+
+<style>
+    .auth-card {
+        background: var(--bs-card-bg);
+        border: 1px solid var(--bs-border-color);
+        transition: transform 0.3s ease;
+    }
+
+        .auth-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .form-control {
+        background-color: var(--bs-dark-bg);
+        border-color: var(--bs-border-color);
+        color: var(--bs-body-color);
+    }
+
+        .form-control:focus {
+            border-color: var(--bs-primary);
+            box-shadow: 0 0 0 0.25rem rgba(106, 17, 203, 0.25);
+        }
+
+    .toggle-password {
+        color: var(--bs-text-secondary);
+    }
+
+        .toggle-password:hover {
+            color: var(--bs-primary);
+        }
+</style>

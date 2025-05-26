@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Producer>
+@{
+    ViewData["Title"] = "Producers";
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="display-5 text-gradient">
+            <i class="bi bi-building-gear me-2"></i>Production Companies
+        </h1>
+        @if (User.Identity.IsAuthenticated && User.IsInRole ("Admin"))
+        {
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-1"></i> Add New producer
+            </a>
+        }
+    </div>
+
+    <div class="row g-4">
+        @foreach (var producer in Model)
+        {
+            <div class="col-xl-4 col-lg-6 col-md-6">
+                <div class="card producer-card h-100 border-0 shadow-sm">
+                    <div class="position-relative">
+                        <img src="@(!string.IsNullOrEmpty(producer.CompanyLogoUrl) ? producer.CompanyLogoUrl : "/images/producer-placeholder.png")"
+                        class="card-img-top producer-logo" alt="@producer.Name logo">
+                        <div class="producer-badge">
+                            <span class="badge bg-dark">
+                                <i class="bi bi-film"></i> @producer.Movies?.Count movies
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">@producer.Name</h5>
+                        <p class="card-text text-muted producer-description">
+                            @(!string.IsNullOrEmpty (producer.Bio) ? producer.Bio : "No description available")
+                        </p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Details" asp-route-id="@producer.Id"
+                            class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-info-circle"></i> Details
+                            </a>
+                            @if (User.Identity.IsAuthenticated && User.IsInRole ("Admin"))
+                            {
+                                <a asp-action="Edit" asp-route-id="@producer.Id"
+                                class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@producer.Id"
+                                class="btn btn-sm btn-outline-danger">
+                                    <i class="bi  bi-trash"></i> Delete
+                                </a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .producer-card {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 1px solid #2d2d2d;
+        }
+
+            .producer-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            }
+
+        .producer-logo {
+            height: 200px;
+            object-fit: contain;
+            background-color: #2d2d2d;
+            padding: 1rem;
+        }
+
+        .producer-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+
+        .producer-description {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 72px;
+        }
+    </style>
+}

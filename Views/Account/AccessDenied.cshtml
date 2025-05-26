@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewData["Title"] = "AccessDenied";
+}
+
+
+<h1>AccessDenied</h1>
+<div class="container min-vh-80 d-flex align-items-center justify-content-center">
+    <div class="col-lg-6 col-md-8 offset-md-2">
+        <div class="success-card card border-0 shadow-lg p-5 text-center"
+             data-aos="zoom-in"
+             data-aos-duration="800">
+            <div class="icon-wrapper mb-4">
+                <div class="checkmark-animation">
+                    <i class="bi bi-check2-circle text-success fs-1"></i>
+                    <div class="circle-animation"></div>
+                </div>
+            </div>
+
+            <h2 class="mb-3 fw-bold text-gradient-primary">you are not allowed to access this page</h2>
+            <p class="lead text-muted mb-4">
+               Please,Click the button below to be redirected to the home page.
+            </p>
+
+            <div class="d-grid gap-3 mx-auto" style="max-width: 300px;">
+                <a class="btn btn-primary btn-lg rounded-pill py-3 shadow-sm"
+                   asp-action="Index"
+                   data-aos="fade-up"
+                   data-aos-delay="300">
+                    <i class="bi bi-house-door me-2"></i>Return to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .success-card {
+        background: var(--bs-card-bg);
+        border-radius: 1.5rem;
+        border: 1px solid var(--bs-border-color);
+    }
+
+    .checkmark-animation {
+        position: relative;
+        display: inline-block;
+    }
+
+        .checkmark-animation i {
+            animation: checkmarkScale 0.6s ease-in-out;
+        }
+
+    .circle-animation {
+        position: absolute;
+        top: -15%;
+        left: -15%;
+        width: 130%;
+        height: 130%;
+        border: 2px solid var(--bs-success);
+        border-radius: 50%;
+        animation: circleExpand 1s ease-out;
+        opacity: 0;
+    }
+
+    .text-gradient-primary {
+        background: var(--bs-gradient);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+</style>

@@ -1,0 +1,71 @@
+﻿@model Producer
+@{
+    ViewData["Title"] = "Edit Producer";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-dark text-white">
+                    <h3><i class="bi bi-pencil-square me-2"></i>Edit @Model.Name</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Edit">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Name" class="form-label"></label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ContactEmail" class="form-label"></label>
+                                <input asp-for="ContactEmail" class="form-control" />
+                                <span asp-validation-for="ContactEmail" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CompanyLogoUrl" class="form-label"></label>
+                            <input asp-for="CompanyLogoUrl" class="form-control" id="logoUrl" />
+                            <span asp-validation-for="CompanyLogoUrl" class="text-danger"></span>
+                        </div>
+
+                        <div class="text-center mb-4">
+                            <img id="logoPreview" src="@(!string.IsNullOrEmpty(Model.CompanyLogoUrl) ? Model.CompanyLogoUrl : "/images/producer-placeholder.png")"
+                                 class="img-thumbnail" style="max-height: 200px;">
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Bio" class="form-label"></label>
+                            <textarea asp-for="Bio" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Bio" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#logoUrl').on('input', function() {
+                const url = $(this).val();
+                $('#logoPreview').attr('src', url || '/images/producer-placeholder.png');
+            });
+        });
+    </script>
+}

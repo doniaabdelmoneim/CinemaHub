@@ -1,0 +1,133 @@
+﻿@model CinemaHub.Models.Movie
+
+@{
+    ViewData["Title"] = "Movie Details";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5 text-gradient">
+            <i class="bi bi-film me-2"></i>@Model.Title
+        </h1>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary rounded-pill shadow-sm me-2">
+                <i class="bi bi-pencil me-1"></i>Edit
+            </a>
+            <a asp-action="Index" class="btn btn-outline-secondary rounded-pill shadow-sm">
+                <i class="bi bi-arrow-left me-1"></i>Back to List
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body text-center">
+                    <img src="@Model.PosterUrl" class="img-fluid rounded shadow mb-3" alt="@Model.Title" style="max-height: 400px;" onerror="this.onerror=null;this.src='/images/default-movie.jpg';">
+
+                    <div class="d-flex justify-content-center mb-3">
+                        <span class="badge bg-primary fs-6">@Model.Category</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <i class="bi bi-clock text-primary me-1"></i>
+                            <span>@Model.DurationMinutes mins</span>
+                        </div>
+                        <div class="text-warning">
+                            <i class="bi bi-star-fill"></i>
+                            <span>@(Model.ImdbRating?.ToString("0.0") ?? "N/A")</span>
+                        </div>
+                    </div>
+
+                    <h4 class="text-success mb-3">$@Model.price.ToString("0.00")</h4>
+
+                    <div class="d-grid gap-2">
+                        <a class="btn btn-primary rounded-pill" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@Model.Id">
+                                <i class="bi bi-ticket-perforated me-1"></i>Book Tickets
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="bi bi-info-circle me-2"></i>Movie Details
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <h4 class="mb-3">Overview</h4>
+                    <p class="lead">@Model.Description</p>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <h5><i class="bi bi-person-video2 text-primary me-2"></i>Director</h5>
+                            <p>@Model.Director</p>
+
+                            <h5><i class="bi bi-calendar-event text-primary me-2"></i>Release Date</h5>
+                            <p>@Model.ReleaseDate.ToString("MMMM dd, yyyy")</p>
+
+                            <h5><i class="bi bi-translate text-primary me-2"></i>Language</h5>
+                            <p>@Model.Language</p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h5><i class="bi bi-building text-primary me-2"></i>Cinema</h5>
+                            <p>@Model.Cinema?.Name</p>
+                            <small class="text-muted">@Model.Cinema?.Location</small>
+
+                            <h5 class="mt-3"><i class="bi bi-person-badge text-primary me-2"></i>Producer</h5>
+                            <p>@Model.Producer?.Name</p>
+
+                            <h5><i class="bi bi-exclamation-triangle text-primary me-2"></i>Age Rating</h5>
+                            <p>@Model.AgeRating</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5><i class="bi bi-collection-play text-primary me-2"></i>Status</h5>
+                            <span class="badge @(Model.IsActive ? "bg-success" : "bg-secondary")">
+                                @(Model.IsActive ? "Now Showing" : "Not Available")
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.ActorMovies != null && Model.ActorMovies.Any ())
+            {
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-dark text-white">
+                        <h3 class="card-title mb-0">
+                            <i class="bi bi-people me-2"></i>Cast (@Model.ActorMovies.Count)
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+                            @foreach (var actorMovie in Model.ActorMovies)
+                            {
+                                <div class="col">
+                                    <div class="card h-100 border-0 shadow-sm">
+                                        <img src="@actorMovie.Actor.PhotoUrl" class="card-img-top" alt="@actorMovie.Actor.FullName" style="height: 150px; object-fit: cover;">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-title mb-0">@actorMovie.Actor.FullName</h6>
+                                            <small class="text-muted">@actorMovie.Movie</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+}

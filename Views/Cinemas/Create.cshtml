@@ -1,0 +1,128 @@
+﻿@model CinemaHub.Models.Cinema
+
+@{
+    ViewData["Title"] = "Add New Cinema";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5 text-gradient">
+            <i class="bi bi-building me-2"></i>Add New Cinema
+        </h1>
+        <a asp-action="Index" class="btn btn-outline-secondary rounded-pill shadow-sm">
+            <i class="bi bi-arrow-left me-1"></i>Back to List
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <h3 class="card-title mb-0">
+                <i class="bi bi-plus-circle me-2"></i>Cinema Information
+            </h3>
+        </div>
+
+        <div class="card-body">
+            <form asp-action="Create" class="row g-3">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="col-md-6">
+                    <label asp-for="Name" class="form-label"></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-building"></i></span>
+                        <input asp-for="Name" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Location" class="form-label"></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                        <input asp-for="Location" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Location" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Description" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="ContactNumber" class="form-label"></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                        <input asp-for="ContactNumber" class="form-control" />
+                    </div>
+                    <span asp-validation-for="ContactNumber" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="ContactEmail" class="form-label"></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                        <input asp-for="ContactEmail" class="form-control" />
+                    </div>
+                    <span asp-validation-for="ContactEmail" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="OpeningHours" class="form-label"></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-clock"></i></span>
+                        <input asp-for="OpeningHours" class="form-control" />
+                    </div>
+                    <span asp-validation-for="OpeningHours" class="text-danger small"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="TotalHalls" class="form-label"></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-door-open"></i></span>
+                        <input asp-for="TotalHalls" class="form-control" />
+                    </div>
+                    <span asp-validation-for="TotalHalls" class="text-danger small"></span>
+                </div>
+
+                <div class="col-12">
+                    <label asp-for="CinemaImageUrl" class="form-label"></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-image"></i></span>
+                        <input asp-for="CinemaImageUrl" class="form-control" placeholder="https://example.com/image.jpg" />
+                    </div>
+                    <span asp-validation-for="CinemaImageUrl" class="text-danger small"></span>
+                    <div class="mt-2">
+                        <small class="text-muted">Preview:</small>
+                        <div id="imagePreview" class="border rounded p-2 text-center" style="min-height: 100px;">
+                            <span class="text-muted">Image preview will appear here</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 text-end mt-4">
+                    <button type="submit" class="btn btn-primary rounded-pill shadow-sm px-4">
+                        <i class="bi bi-save me-1"></i>Create Cinema
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync ("_ValidationScriptsPartial");
+    }
+    <script>
+        // Image URL preview
+        document.getElementById('CinemaImageUrl').addEventListener('input', function() {
+            const preview = document.getElementById('imagePreview');
+            if (this.value) {
+                preview.innerHTML = `<img src="${this.value}" class="img-fluid" style="max-height: 200px;" alt="Preview">`;
+            } else {
+                preview.innerHTML = '<span class="text-muted">Image preview will appear here</span>';
+            }
+        });
+    </script>
+}

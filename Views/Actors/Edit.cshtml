@@ -1,0 +1,96 @@
+﻿@model Actor
+@{
+    ViewData["Title"] = "Edit Actor";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-dark text-white py-3">
+                    <h1 class="h3 mb-0">
+                        <i class="bi bi-pencil-square me-2"></i>Edit Actor
+                    </h1>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Edit" class="needs-validation" novalidate>
+                        <input type="hidden" asp-for="Id" />
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="FirstName" class="form-control" placeholder=" " required />
+                                    <label asp-for="FirstName"></label>
+                                    <span asp-validation-for="FirstName" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <div class="form-floating">
+                                    <input asp-for="LastName" class="form-control" placeholder=" " required />
+                                    <label asp-for="LastName"></label>
+                                    <span asp-validation-for="LastName" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="form-floating">
+                                <input asp-for="BirthDate" type="date" class="form-control" placeholder=" " />
+                                <label asp-for="BirthDate"></label>
+                                <span asp-validation-for="BirthDate" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 text-center">
+                            <div class="actor-image-preview mb-3">
+                                <img id="imagePreview" class="img-thumbnail rounded-circle shadow" 
+                                     style="width: 200px; height: 200px; object-fit: cover;"
+                                     src="@(string.IsNullOrEmpty(Model.PhotoUrl) ? "/images/actor-placeholder.jpg" : Model.PhotoUrl )" alt="Actorpreview" />
+                            </div>
+                            <div class="form-floating">
+                                <input asp-for="PhotoUrl" class="form-control" placeholder=" " 
+                                       id="photoUrlInput" />
+                                <label asp-for="PhotoUrl">Profile Image URL</label>
+                                <span asp-validation-for="PhotoUrl" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="form-floating">
+                                <textarea asp-for="Bio" class="form-control" placeholder=" " 
+                                          style="height: 120px"></textarea>
+                                <label asp-for="Bio"></label>
+                                <span asp-validation-for="Bio" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a asp-action="Index" class="btn btn-outline-secondary me-md-2">
+                                <i class="bi bi-arrow-left-circle"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Image preview functionality
+            $('#photoUrlInput').on('input', function() {
+                const url = $(this).val();
+                if (url) {
+                    $('#imagePreview').attr('src', url);
+                } else {
+                    $('#imagePreview').attr('src', 'https://via.placeholder.com/200?text=Actor+Image');
+                }
+            });
+        });
+    </script>
+}

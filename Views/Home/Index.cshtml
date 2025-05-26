@@ -1,0 +1,272 @@
+﻿@{
+    ViewData["Title"] = "CinemaHub - Your Ultimate Movie Experience";
+}
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container pt-5">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to <span class="text-primary">CinemaHub</span></h1>
+            <p class="hero-subtitle">Discover and book your next movie experience</p>
+            <div class="hero-actions">
+                <a asp-controller="Movies" asp-action="Index" class="btn btn-primary btn-lg">
+                    <i class="bi bi-film"></i> Browse Movies
+                </a>
+                <a asp-controller="Cinemas" asp-action="Index" class="btn btn-outline-light btn-lg">
+                    <i class="bi bi-geo-alt"></i> Find Cinemas
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <h2 class="section-title">Why Choose CinemaHub?</h2>
+
+        <div class="features-grid">
+            <!-- Feature 1 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="bi bi-ticket-perforated"></i>
+                </div>
+                <h3>Easy Booking</h3>
+                <p>Book your tickets in just a few clicks with our simple and intuitive interface.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="bi bi-collection-play"></i>
+                </div>
+                <h3>Wide Selection</h3>
+                <p>Access the latest blockbusters and timeless classics all in one place.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="bi bi-star"></i>
+                </div>
+                <h3>Premium Experience</h3>
+                <p>Enjoy comfortable seating, great sound, and crystal-clear projection.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Now Showing Section -->
+<section class="now-showing">
+    <div class="container">
+        <h2 class="section-title">Now Showing</h2>
+        <div class="movies-grid">
+            <!-- Movie cards would be dynamically generated in a real app -->
+            <div class="movie-card">
+                <img src="/images/movies/lion-king.jpg" alt="The Lion King" class="movie-poster">
+                <div class="movie-overlay">
+                    <h3>The Lion King</h3>
+                    <a href="#" class="btn btn-sm btn-primary">Book Now</a>
+                </div>
+            </div>
+            <div class="movie-card">
+                <img src="/images/movies/forrest-gump.jpg" alt="Forrest Gump" class="movie-poster">
+                <div class="movie-overlay">
+                    <h3>Forrest Gump</h3>
+                    <a href="#" class="btn btn-sm btn-primary">Book Now</a>
+                </div>
+            </div>
+            <div class="movie-card">
+                <img src="/images/movies/avengers-endgame.jpg" alt="Avengers: Endgame" class="movie-poster">
+                <div class="movie-overlay">
+                    <h3>Avengers: Endgame</h3>
+                    <a href="#" class="btn btn-sm btn-primary">Book Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-4">
+            <a asp-controller="Movies" asp-action="Index" class="btn btn-outline-light">
+                View All Movies <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+@section Styles {
+    <style>
+        /* Dark Theme Variables */
+        :root {
+            --dark-bg: #121212;
+            --darker-bg: #0d0d0d;
+            --card-bg: #1e1e1e;
+            --border-color: #2d2d2d;
+            --text-primary: #e0e0e0;
+            --text-secondary: #9e9e9e;
+            --primary-color: #0d6efd;
+        }
+
+        /* Base Styles */
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url('/images/cinema-bg.jpg') center/cover no-repeat;
+            padding: 8rem 0;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+            .hero-title .text-primary {
+                color: var(--primary-color);
+            }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 5rem 0;
+            background-color: var(--darker-bg);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+            .feature-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+        }
+
+        /* Now Showing Section */
+        .now-showing {
+            padding: 5rem 0;
+            background-color: var(--dark-bg);
+        }
+
+        .movies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .movie-card {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            aspect-ratio: 2/3;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .movie-poster {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .movie-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .movie-card:hover .movie-overlay {
+            transform: translateY(0);
+        }
+
+        .movie-card:hover .movie-poster {
+            transform: scale(1.05);
+        }
+
+        .movie-overlay h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+      
+    </style>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animation for features on scroll
+            const featureCards = document.querySelectorAll('.feature-card');
+
+            const featureObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            featureCards.forEach((card, index) => {
+                card.style.opacity = 0;
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = `all 0.5s ease ${index * 0.1}s`;
+                featureObserver.observe(card);
+            });
+        });
+    </script>
+}

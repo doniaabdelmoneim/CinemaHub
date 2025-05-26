@@ -1,0 +1,79 @@
+﻿@model CinemaHub.Models.Cinema
+
+@{
+    ViewData["Title"] = "Delete Cinema";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5 text-gradient text-danger">
+            <i class="bi bi-exclamation-triangle me-2"></i>Delete Cinema
+        </h1>
+        <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary rounded-pill shadow-sm">
+            <i class="bi bi-arrow-left me-1"></i>Cancel
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm border-danger">
+        <div class="card-header bg-danger text-white">
+            <h3 class="card-title mb-0">
+                <i class="bi bi-trash me-2"></i>Confirm Deletion
+            </h3>
+        </div>
+
+        <div class="card-body">
+            <div class="alert alert-danger" role="alert">
+                <h4 class="alert-heading">Warning!</h4>
+                <p>You are about to permanently delete this cinema. This action cannot be undone.</p>
+                <hr>
+                <p class="mb-0">All related data will also be removed from the system.</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    @if (!string.IsNullOrEmpty (Model.CinemaImageUrl))
+                    {
+                        <img src="@Model.CinemaImageUrl"
+                             class="img-fluid rounded-circle border border-4 border-white shadow mb-3"
+                             style="width: 200px; height: 200px; object-fit: cover;"
+                             alt="@Model.Name"
+                             onerror="this.onerror=null;this.src='/images/default-cinema.png';">
+                    }
+                    else
+                    {
+                        <img src="/images/default-cinema.png"
+                             class="img-fluid rounded-circle border border-4 border-white shadow mb-3"
+                             style="width: 200px; height: 200px; object-fit: cover;"
+                             alt="Default cinema image">
+                    }
+                </div>
+
+                <div class="col-md-8">
+                    <h3 class="text-danger">@Model.Name</h3>
+                    <p class="text-muted">@Model.Description</p>
+
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item">
+                            <i class="bi bi-geo-alt-fill text-primary me-2"></i>@Model.Location
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-telephone-fill text-primary me-2"></i>@Model.ContactNumber
+                        </li>
+                        <li class="list-group-item">
+                            <i class="bi bi-door-open-fill text-primary me-2"></i>@Model.TotalHalls screening halls
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <form asp-action="Delete" class="mt-4">
+                <input type="hidden" asp-for="Id" />
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-danger rounded-pill shadow-sm px-4">
+                        <i class="bi bi-trash me-1"></i>Confirm Delete
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

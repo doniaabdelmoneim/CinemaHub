@@ -1,0 +1,159 @@
+﻿@model IEnumerable<Cinema>
+@{
+    ViewData["Title"] = "Cinemas";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5 text-gradient">
+            <i class="bi bi-building me-2"></i>Our Cinemas
+        </h1>
+        @if (User.Identity.IsAuthenticated && User.IsInRole ("Admin"))
+        {
+            <a asp-action="Create" class="btn btn-primary rounded-pill shadow-sm">
+                <i class="bi bi-plus-circle me-1"></i>Add New Cinema
+            </a>
+        }
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="card-title mb-0">
+                    <i class="bi bi-list-columns-reverse me-2"></i>Cinema Locations
+                </h3>
+                <div class="input-group" style="width: 300px;">
+                    <input type="text" class="form-control form-control-sm" placeholder="Search cinemas...">
+                    <button class="btn btn-outline-light btn-sm" type="button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">#</th>
+                            <th>Cinema</th>
+                            <th>Location</th>
+                            <th>Logo</th>
+                            @if (User.Identity.IsAuthenticated && User.IsInRole ("Admin"))
+                            {
+                                <th class="text-end pe-4">Actions</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cinema in Model)
+                        {
+                            <tr class="hover-effect">
+                                <td class="ps-4 fw-bold">@cinema.Id</td>
+                                <td>
+                                    <a asp-action="Details" asp-route-id="@cinema.Id" class="text-decoration-none">
+                                        @cinema.Name
+                                    </a>
+                                    @if (!string.IsNullOrEmpty (cinema.Description))
+                                    {
+                                        <div class="text-muted small mt-1">@cinema.Description</div>
+                                    }
+                                </td>
+                                <td>
+                                    <i class="bi bi-geo-alt-fill text-primary me-1"></i>
+                                    @cinema.Location
+                                    @if (!string.IsNullOrEmpty (cinema.ContactNumber))
+                                    {
+                                        <div class="text-muted small mt-1">
+                                            <i class="bi bi-telephone-fill me-1"></i>@cinema.ContactNumber
+                                        </div>
+                                    }
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty (cinema.CinemaImageUrl))
+                                    {
+                                        <img src="@cinema.CinemaImageUrl"
+                                        class="rounded-circle border border-2 border-white shadow-sm"
+                                        width="60" height="60"
+                                        alt="@cinema.Name logo"
+                                        onerror="this.onerror=null;this.src='/images/default-cinema.png';">
+                                    }
+                                    else
+                                    {
+                                        <img src="/images/default-cinema.png"
+                                        class="rounded-circle border border-2 border-white shadow-sm"
+                                        width="60" height="60"
+                                        alt="Default cinema logo">
+                                    }
+                                </td>
+                                @if (User.Identity.IsAuthenticated && User.IsInRole ("Admin"))
+                                {
+                                    <td class="text-end pe-4">
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <a asp-action="Edit" asp-route-id="@cinema.Id"
+                                            class="btn btn-outline-primary rounded-pill me-1">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@cinema.Id"
+                                            class="btn btn-outline-danger rounded-pill">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card-footer bg-light">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="text-muted small">
+                    Showing @Model.Count() cinemas
+                </div>
+                <nav aria-label="Cinema pagination">
+                    <ul class="pagination pagination-sm mb-0">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .text-gradient {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hover-effect:hover {
+            background-color: rgba(13, 110, 253, 0.05);
+            transform: translateY(-1px);
+            transition: all 0.2s ease;
+        }
+
+        .card {
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .table-hover tbody tr {
+            transition: all 0.3s ease;
+        }
+    </style>
+}
