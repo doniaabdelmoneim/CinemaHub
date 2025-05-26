@@ -60,13 +60,21 @@ dotnet ef database update
 📂 Project Structure
 
 CinemaHub/
+
 ├── Controllers/
+
 ├── Data/
+
 ├── Models/
+
 ├── Services/
+
 ├── ViewModels/
+
 ├── Views/
+
 ├── wwwroot/
+
 └── README.md
 
 📸 Screenshots
