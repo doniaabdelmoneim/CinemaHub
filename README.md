@@ -1,6 +1,6 @@
 ﻿# 🎬 CinemaHub - Modern Movie Theater Management System
 
-![CinemaHub Screenshot](screenshot.png) <!-- Add actual screenshot path -->
+![CinemaHub Screenshot](screenshot.png) 
 
 ## 🚀 Overview
 
@@ -39,7 +39,7 @@ CinemaHub is a full-featured ASP.NET Core web application for managing movie the
 • Identity Framework  
 
 **Database**  
-• SQL Server (compatible with other relational DBs)  
+• SQL Server
 
 ## 📦 Installation
 
@@ -58,6 +58,7 @@ CinemaHub is a full-featured ASP.NET Core web application for managing movie the
 dotnet ef database update
 
 📂 Project Structure
+
 CinemaHub/
 ├── Controllers/
 ├── Data/
@@ -67,14 +68,14 @@ CinemaHub/
 ├── Views/
 ├── wwwroot/
 └── README.md
+
 📸 Screenshots
 <div align="center">
-  <img src="screenshots/home" width="45%" alt="Home Page">
+  <img src="screenshots/home.png" width="45%" alt="Home Page">
   <img src="screenshots/user.png" width="45%" alt="user Page">
   <img src="screenshots/cart.png" width="45%" alt="cart Page">
   <img src="screenshots/Admin.png" width="45%" alt="Admin Dashboard"> 
 </div>
-
 
 
 📜 License
